@@ -1,0 +1,197 @@
+## Posedge-One ucf file
+## http://posedge.ir/
+
+##Clock signal 24 MHz
+NET "clk_24MHz" LOC = P50 | IOSTANDARD = LVCMOS33 | PERIOD = 24MHz ;
+Net "clk_24MHz" TNM_NET = sys_clk_pin;
+TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 24 MHz high 50%;
+
+## Usb-RS232 interface
+Net "rs232_dce_rxd" LOC = P105 | IOSTANDARD=LVCMOS33; 
+Net "rs232_dce_txd" LOC = P104 | IOSTANDARD=LVCMOS33; 
+
+###################################################################################################################################################
+#                                                   SPI Flash                                                                                     #
+###################################################################################################################################################
+NET "flash_si"                        LOC = P64     | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8 ;  #MOSI
+NET "flash_so"                        LOC = P65     | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8 ;  #MISO 
+NET "flash_sck"                       LOC = P70     | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8 ;  #SCK
+NET "flash_cen"                       LOC = P38     | IOSTANDARD = LVCMOS33 | SLEW = FAST | DRIVE = 8 ;  #CS 
+
+###################################################################################################################################################
+#                                                   SPI Bus (LogiX1 MegaWing Header)                                                                            #
+###################################################################################################################################################
+NET "spibus_sck"                     LOC = P126     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #Header Pin 1
+NET "spibus_si"                    	 LOC = P127     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | PULLUP;        #Header Pin 3
+NET "spibus_so"                      LOC = P131     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #Header Pin 5
+NET "spibus_cen"                     LOC = P132     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #Header Pin 7
+
+###################################################################################################################################################
+#                                                   SRAM                                                                             #
+###################################################################################################################################################             
+NET "sram_we"           			 LOC = p22     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_oe_n"         			 LOC = p140    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | PULLDOWN    ; #hard wired to GND
+NET "sram_ce_n"         			 LOC = p14     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | PULLDOWN    ; #hard wired to GND
+NET "sram_data<0>"      			 LOC = p15     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_data<1>"      			 LOC = p16     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_data<2>"      			 LOC = p17     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_data<3>"      			 LOC = p21     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_data<4>"      			 LOC = p144    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_data<5>"      			 LOC = p143    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_data<6>"      			 LOC = p142    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_data<7>"      			 LOC = p141    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<0>"      			 LOC = p8      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<1>"      			 LOC = p9      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<2>"      			 LOC = p10     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<3>"      			 LOC = p11     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<4>"      			 LOC = p12     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<5>"      			 LOC = p23     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<6>"      			 LOC = p24     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<7>"      			 LOC = p26     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<8>"      			 LOC = p27     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<9>"      			 LOC = p29     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<10>"     			 LOC = p7      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<11>"     			 LOC = p6      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<12>"     			 LOC = p5      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<13>"     			 LOC = p2      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<14>"     			 LOC = p1      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<15>"     			 LOC = p139    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<16>"     			 LOC = p138    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<17>"     			 LOC = p137    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "sram_addr<18>"     			 LOC = p134    | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+
+###################################################################################################################################################
+#                                               Seven Segment Display (LogiX1 MegaWing)                                                           #
+################################################################################################################################################### 
+NET "SevenSegment[7]"            	  LOC = P47     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #a
+NET "SevenSegment[6]"            	  LOC = P43     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #b
+NET "SevenSegment[5]"                LOC = P34     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #c
+NET "SevenSegment[4]"                LOC = P40     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #d
+NET "SevenSegment[3]"                LOC = P35     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #e
+NET "SevenSegment[2]"                LOC = P44     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #f
+NET "SevenSegment[1]"                LOC = P30     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #g
+NET "SevenSegment[0]"                LOC = P33     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #dot
+NET "SevenSegmentEnable[3]"          LOC = P32     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #Enables for Seven Segment 3
+NET "SevenSegmentEnable[2]"          LOC = P41     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #Enables for Seven Segment 2
+NET "SevenSegmentEnable[1]"          LOC = P45     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;   #Enables for Seven Segment 1
+NET "SevenSegmentEnable[0]"          LOC = P46     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;	 #Enables for Seven Segment 0	
+
+###################################################################################################################################################
+#                                                     Leds (LogiX1 MegaWing)                                                                      #
+################################################################################################################################################### 
+NET "LED[7]" LOC = P111 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #D1
+NET "LED[6]" LOC = P112 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #D2
+NET "LED[5]" LOC = P114 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #D3
+NET "LED[4]" LOC = P115 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #D4
+NET "LED[3]" LOC = P116 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #D5
+NET "LED[2]" LOC = P117 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #D6
+NET "LED[1]" LOC = P118 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #D7
+NET "LED[0]" LOC = P119 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #D8
+
+###################################################################################################################################################
+#                                                    DIP Switches (LogiX1 MegaWing)                                                               #
+################################################################################################################################################### 
+NET "sw[0]" LOC = P51 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP;  #DP1
+NET "sw[1]" LOC = P48 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP;  #DP2
+NET "sw[2]" LOC = P55 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP;  #DP3
+NET "sw[3]" LOC = P56 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP;  #DP4
+NET "sw[4]" LOC = P57 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP;  #DP5
+NET "sw[5]" LOC = P58 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP;  #DP6
+NET "sw[6]" LOC = P66 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP;  #DP7
+NET "sw[7]" LOC = P59 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP;  #DP8
+
+###################################################################################################################################################
+#                                              Push Buttons Switches (LogiX1 MegaWing)                                                            #
+################################################################################################################################################### 
+NET "Switch[0]"    LOC = P78 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP; #SW1
+NET "Switch[1]"    LOC = P75 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP; #SW2
+NET "Switch[2]"    LOC = P67 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP; #SW3
+NET "Switch[3]"    LOC = P74 | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST | PULLUP; #SW4
+
+###################################################################################################################################################
+#                                                    VGA (LogiX1 MegaWing)                                                                        #
+################################################################################################################################################### 
+NET "HSync"                      LOC = P87     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "VSync"                      LOC = P85     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "Red[1]"                     LOC = P80     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "Red[0]"                     LOC = P79     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "Green[1]"                   LOC = P82     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "Green[0]"                   LOC = P81     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "Blue[1]"                    LOC = P84     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+NET "Blue[0]"                    LOC = P83     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+
+###################################################################################################################################################
+#                                                   Audio (LogiX1 MegaWing)                                                                       #
+################################################################################################################################################### 
+NET "Audio1"   LOC = P124      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; # Header Pin 2
+
+
+####################################################################################################################################################
+##                                                   SPI Bus on Wing BH                                                                            #
+####################################################################################################################################################
+#NET "spibus_sck"   LOC = P51     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; # B9
+#NET "spibus_mosi"  LOC = P47     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | PULLUP;		  # B10 
+#NET "spibus_miso"  LOC = P45     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; # B11
+#NET "spibus_cs"    LOC = P43     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;  #B12
+
+####################################################################################################################################################
+##                                                   Audio (Wing BH)                                                                       #
+#################################################################################################################################################### 
+#NET "Audio1"   LOC = P32      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; #Pin B15
+
+####################################################################################################################################################
+##                                                   Wing AL                                                                                       #
+#################################################################################################################################################### 
+#NET "WING_AL[0]"   LOC = P85      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+#NET "WING_AL[1]"   LOC = P83      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "WING_AL[2]"   LOC = P81      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "WING_AL[3]"   LOC = P79      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "WING_AL[4]"   LOC = P75      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "WING_AL[5]"   LOC = P67      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "WING_AL[6]"   LOC = P59      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "WING_AL[7]"   LOC = P57      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#
+####################################################################################################################################################
+##                                                   Wing AH                                                                                     #
+####################################################################################################################################################  
+#NET "WING_AH[0]"   LOC = P55      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+#NET "WING_AH[1]"   LOC = P48      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+#NET "WING_AH[2]"   LOC = P46      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+#NET "WING_AH[3]"   LOC = P44      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+#NET "WING_AH[4]"   LOC = P41      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+#NET "WING_AH[5]"   LOC = P35      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+#NET "WING_AH[6]"   LOC = P33      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+#NET "WING_AH[7]"   LOC = P30      | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ; 
+                   
+#####################################################################################################################################################
+##                              		 HDMI Wing placed on Wing CL	                                              						                   #
+#####################################################################################################################################################	
+#NET "TMDS_out_P(0)"     LOC = P111   | IOSTANDARD = TMDS_33 | DRIVE = 8  | SLEW = FAST; # Blue
+#NET "TMDS_out_N(0)"     LOC = P112   | IOSTANDARD = TMDS_33 | DRIVE = 8  | SLEW = FAST;
+#NET "TMDS_out_P(1)"     LOC = P114   | IOSTANDARD = TMDS_33 | DRIVE = 8  | SLEW = FAST; # Green    
+#NET "TMDS_out_N(1)"     LOC = P115   | IOSTANDARD = TMDS_33 | DRIVE = 8  | SLEW = FAST;
+#NET "TMDS_out_P(2)"     LOC = P116   | IOSTANDARD = TMDS_33 | DRIVE = 8  | SLEW = FAST; # Red  
+#NET "TMDS_out_N(2)"     LOC = P117   | IOSTANDARD = TMDS_33 | DRIVE = 8  | SLEW = FAST; 
+#NET "TMDS_out_CLK_P"    LOC = P118   | IOSTANDARD = TMDS_33 | DRIVE = 8  | SLEW = FAST; # CLK
+#NET "TMDS_out_CLK_N"    LOC = P119   | IOSTANDARD = TMDS_33 | DRIVE = 8  | SLEW = FAST;
+
+####################################################################################################################################################
+##                                    VGA (VGA_12B wing Placed on Wing C)                                                                          #
+#################################################################################################################################################### 
+#NET "HSync"                      LOC = P112     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "VSync"                      LOC = P114     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Red[3]"                     LOC = P126     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Red[2]"                     LOC = P127     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Red[1]"                     LOC = P131     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Red[0]"                     LOC = P132     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Green[3]"                   LOC = P120     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Green[2]"                   LOC = P121     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Green[1]"                   LOC = P123     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Green[0]"                   LOC = P124     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Blue[3]"                    LOC = P115     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Blue[2]"                    LOC = P116     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Blue[1]"                    LOC = P118     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+#NET "Blue[0]"                    LOC = P119     | IOSTANDARD = LVCMOS33 | DRIVE = 8 | SLEW = FAST ;
+	 
+	 
+
