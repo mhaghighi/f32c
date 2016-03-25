@@ -126,30 +126,30 @@ entity glue is
 	Audio1: out std_logic; -- fm antenna is here
 	
 -- Peripherals on LogiX1 Megawing (comment when Megawing is not used)	
---	LED: out std_logic_vector(7 downto 0);
---	Switch: in std_logic_vector(3 downto 0);
---	sw: in std_logic_vector(7 downto 0);
---	SevenSegment: out std_logic_vector(7 downto 0); -- 7-segment display
---	SevenSegmentEnable: out std_logic_vector(3 downto 0); -- 7-segment display
---	HSync,VSync: out std_logic;
---	Red: out std_logic_vector(1 downto 0);
---	Green: out std_logic_vector(1 downto 0);
---	Blue: out std_logic_vector(1 downto 0);
+	LED: out std_logic_vector(7 downto 0);
+	Switch: in std_logic_vector(3 downto 0);
+	sw: in std_logic_vector(7 downto 0);
+	SevenSegment: out std_logic_vector(7 downto 0); -- 7-segment display
+	SevenSegmentEnable: out std_logic_vector(3 downto 0); -- 7-segment display
+	HSync,VSync: out std_logic;
+	Red: out std_logic_vector(1 downto 0);
+	Green: out std_logic_vector(1 downto 0);
+	Blue: out std_logic_vector(1 downto 0)
 
 -- Comment following ports when using megawing
--- 12-bit VGA output	
-	HSync,VSync: out std_logic;
-	Red: out std_logic_vector(3 downto 0);
-	Green: out std_logic_vector(3 downto 0);
-	Blue: out std_logic_vector(3 downto 0);	
--- GPIO Pins
-	WING_AH: inout std_logic_vector(7 downto 0);
-	WING_AL: inout std_logic_vector(7 downto 0);
-	WING_BL: inout std_logic_vector(7 downto 0);	
---	WING_BH: inout std_logic_vector(7 downto 0); used for spibus and fm antenna	
--- TMDS Interface for HDMI output
-	TMDS_out_P, TMDS_out_N: out std_logic_vector(2 downto 0);
-	TMDS_out_CLK_P, TMDS_out_CLK_N: out std_logic
+---- 12-bit VGA output	
+--	HSync,VSync: out std_logic;
+--	Red: out std_logic_vector(3 downto 0);
+--	Green: out std_logic_vector(3 downto 0);
+--	Blue: out std_logic_vector(3 downto 0);	
+---- GPIO Pins
+--	WING_AH: inout std_logic_vector(7 downto 0);
+--	WING_AL: inout std_logic_vector(7 downto 0);
+--	WING_BL: inout std_logic_vector(7 downto 0);	
+----	WING_BH: inout std_logic_vector(7 downto 0); used for spibus and fm antenna	
+---- TMDS Interface for HDMI output
+--	TMDS_out_P, TMDS_out_N: out std_logic_vector(2 downto 0);
+--	TMDS_out_CLK_P, TMDS_out_CLK_N: out std_logic
   );
  
 end glue;
@@ -259,34 +259,34 @@ begin
 	vga_hsync => HSync,
 
 --port mapping for logix1 megawing	connected
---	vga_b(7 downto 6) => Blue(1 downto 0),
---	vga_b(5 downto 0) => open,
---	vga_g(7 downto 6) => Green(1 downto 0),
---	vga_g(5 downto 0) => open,
---	vga_r(7 downto 6) => Red(1 downto 0),
---	vga_r(5 downto 0) => open,
---	simple_out(7 downto 0) => LED(7 downto 0),
---	simple_out(15 downto 8) => SevenSegment(7 downto 0),
---	simple_out(19 downto 16) => SevenSegmentEnable(3 downto 0),
---	simple_out(31 downto 20) => open,
---	simple_in(3 downto 0) => Switch(3 downto 0), 
---	simple_in(15 downto 4) => X"000",
---	simple_in(23 downto 16) => sw(7 downto 0), 
---	simple_in(31 downto 24) => open,
+	vga_b(7 downto 6) => Blue(1 downto 0),
+	vga_b(5 downto 0) => open,
+	vga_g(7 downto 6) => Green(1 downto 0),
+	vga_g(5 downto 0) => open,
+	vga_r(7 downto 6) => Red(1 downto 0),
+	vga_r(5 downto 0) => open,
+	simple_out(7 downto 0) => LED(7 downto 0),
+	simple_out(15 downto 8) => SevenSegment(7 downto 0),
+	simple_out(19 downto 16) => SevenSegmentEnable(3 downto 0),
+	simple_out(31 downto 20) => open,
+	simple_in(3 downto 0) => Switch(3 downto 0), 
+	simple_in(15 downto 4) => X"000",
+	simple_in(23 downto 16) => sw(7 downto 0), 
+	simple_in(31 downto 24) => open,
 
 --port mapping for no addone board 
-  simple_out(7 downto 0) => WING_AL(7 downto 0),
-  simple_out(31 downto 8) => open,
-  simple_in(7 downto 0) => WING_AH(7 downto 0),
-  simple_in(31 downto 8) => open,
-  gpio(7 downto 0) => WING_BL(7 downto 0),
-  gpio(127 downto 8) => open,
-  vga_b(7 downto 4) => Blue(3 downto 0),
-  vga_b(3 downto 0) => open,
-  vga_g(7 downto 4) => Green(3 downto 0),
-  vga_g(3 downto 0) => open,
-  vga_r(7 downto 4) => Red(3 downto 0),
-  vga_r(3 downto 0) => open,
+--  simple_out(7 downto 0) => WING_AL(7 downto 0),
+--  simple_out(31 downto 8) => open,
+--  simple_in(7 downto 0) => WING_AH(7 downto 0),
+--  simple_in(31 downto 8) => open,
+--  gpio(7 downto 0) => WING_BL(7 downto 0),
+--  gpio(127 downto 8) => open,
+--  vga_b(7 downto 4) => Blue(3 downto 0),
+--  vga_b(3 downto 0) => open,
+--  vga_g(7 downto 4) => Green(3 downto 0),
+--  vga_g(3 downto 0) => open,
+--  vga_r(7 downto 4) => Red(3 downto 0),
+--  vga_r(3 downto 0) => open,
 
 	ps2_clk_in => '0',
 	ps2_dat_in => '0'

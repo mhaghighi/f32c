@@ -127,7 +127,17 @@ entity glue_bram_sram8 is
     C_vgahdmi_fifo_step: integer := 0; -- 0 (dbl_y = 0), 40 (dbl_x = 1, dbl_y = 1), 80 (dbl_x = 0, dbl_y = 1)
     C_vgahdmi_fifo_width: integer := 4; -- 4 (dbl_y = 0),  6 (dbl_x = 1, dbl_y = 1),  7 (dbl_x = 0, dbl_y = 1)
     C_vgahdmi_test_picture: integer := 0; -- 0: disable 1:show test picture in Red and Blue channel
-    C_pcm: boolean := false;
+    
+	 C_pcm: boolean := false;
+    C_cw_simple_out: integer := -1; -- simple out bit used for CW modulation. -1 to disable;
+	 C_fmrds: boolean := false; -- enable FM/RDS output to fm_antenna
+		C_fm_stereo: boolean := false;
+		C_fm_filter: boolean := false;
+		C_fm_downsample: boolean := false;
+		C_rds_msg_len: integer := 260; -- bytes of circular sent message, typical 52 for PS or 260 PS+RT
+      C_fmdds_hz: integer := 250000000; -- Hz clk_fmdds (>2*108 MHz, e.g. 250000000, 325000000)
+      C_rds_clock_multiply: integer := 57; -- multiply 57 and divide 3125 from cpu clk 100 MHz
+      C_rds_clock_divide: integer := 3125; -- to get 1.824 MHz for RDS logic
 
     C_vgatext: boolean := false;    -- Xark's feature-rich bitmap+textmode VGA
       C_vgatext_label: string := "f32c";    -- default banner in screen memory
@@ -175,6 +185,8 @@ entity glue_bram_sram8 is
     clk: in std_logic;
     clk_25MHz: in std_logic := '0'; -- VGA pixel clock 25 MHz
 	 clk_250MHz: in std_logic := '0'; -- 250 MHz tmds clock (for work.dvid_out)
+	 clk_fmdds: in std_logic := '0'; -- FM DDS clock (>216 MHz)
+    clk_cw: in std_logic := '0'; -- CW transmitter 433.92 MHz
     clk_dvi: in std_logic := '0';      -- HDMI clock (125MHz)
     clk_dvin: in std_logic:= '0';      -- HDMI clock (125MHz 90 deg offset)
     sram_addr: out std_logic_vector(19 downto 0);
@@ -382,6 +394,11 @@ architecture Behavioral of glue_bram_sram8 is
   signal from_pcm: std_logic_vector(31 downto 0);
   signal pcm_l, pcm_r: std_logic;
   signal pcm_bus_l, pcm_bus_r: ieee.numeric_std.signed(15 downto 0);
+  
+  -- FM/RDS RADIO
+  constant iomap_fmrds: T_iomap_range := (x"FC00", x"FC0F");
+  signal from_fmrds: std_logic_vector(31 downto 0);
+  signal fmrds_ce: std_logic;  
 
   -- ADC
   constant iomap_adc: T_iomap_range := (x"FF40", x"FF5F");
@@ -545,6 +562,10 @@ begin
       if C_pid then
       io_to_cpu <= from_pid;
       end if;
+    when iomap_from(iomap_fmrds, iomap_range) to iomap_to(iomap_fmrds, iomap_range) =>
+	 	if C_fmrds then
+			 io_to_cpu <= from_fmrds;
+		end if;
     when iomap_from(iomap_simple_out, iomap_range) to iomap_to(iomap_simple_out, iomap_range) =>
       for i in 0 to (C_simple_out + 31) / 4 - 1 loop
       if conv_integer(io_addr(3 downto 2)) = i then
@@ -1009,6 +1030,49 @@ begin
   );
   end generate;
 
+    -- CW transmitter
+    -- one selected simple_out enables carrier wave (CW) modulation
+    -- used for carriers of higher frequency than FM DDS
+    -- can produce (433 MHz)
+    G_cw_antenna:
+    if C_cw_simple_out >= 0 and C_simple_out > C_cw_simple_out generate
+      cw_antenna <= R_simple_out(C_cw_simple_out) and clk_cw;
+    end generate;
+	 
+    -- FM/RDS
+    G_fmrds:
+    if C_fmrds generate
+    fm_tx: entity work.fm
+    generic map (
+      c_fmdds_hz => C_fmdds_hz, -- Hz FMDDS clock frequency
+      C_rds_msg_len => C_rds_msg_len, -- allocate RAM for RDS message
+      C_stereo => C_fm_stereo,
+      -- multiply/divide to produce 1.824 MHz clock
+      c_rds_clock_multiply => C_rds_clock_multiply,
+      c_rds_clock_divide => C_rds_clock_divide
+      -- example settings for 25 MHz clock
+      -- c_rds_clock_multiply => 228,
+      -- c_rds_clock_divide => 3125
+      -- settings for super slow (100Hz debug) clock
+      -- c_rds_clock_multiply => 1,
+      -- c_rds_clock_divide => 812500
+    )
+    port map (
+      clk => clk, -- RDS and PCM processing clock 81.25 MHz
+      clk_fmdds => clk_fmdds,
+      ce => fmrds_ce, addr => dmem_addr(3 downto 2),
+      bus_write => dmem_write, byte_sel => dmem_byte_sel,
+      bus_in => cpu_to_dmem, bus_out => from_fmrds,
+      pcm_in_left => (others => '0'),
+      pcm_in_right => (others => '0'),
+--      debug => from_fmrds,
+      fm_antenna => fm_antenna
+    );
+    with conv_integer(io_addr(11 downto 4)) select
+      fmrds_ce <= io_addr_strobe when iomap_from(iomap_fmrds, iomap_range) to iomap_to(iomap_fmrds, iomap_range),
+                             '0' when others;
+    end generate;
+	 
   -- Block RAM
   dmem_bram_write <=
     dmem_addr_strobe and dmem_write when dmem_addr(31 downto 30) = "00" else '0';
